@@ -6,8 +6,22 @@ from starlette import status
 
 zekapi = FastAPI()
 
-@zekapi.get('/main', tags=['main'])
+@zekapi.get('/main',
+             tags=['main'],
+             summary = "main is main lol",
+            #  description="description of main  endpoint",
+             response_description = "description of response")
 def index():
+    """
+    I can write description here 
+    
+    I learn FastAPI slkdgisdmgl
+
+    **tell me the password
+
+    ZEKERIYA BAŞAN
+    
+    """
     return {"text":"Hello ZEK !"}
 
 @zekapi.delete('/{id}', tags=['product-remove'])
@@ -43,12 +57,15 @@ def get_product_by_type(type: ProductType):
 def get_product_by_filter(id:int, type: ProductType, name:str, max_price:Optional[float], min_price:float = 0): # default par must be last parameter
     return {'message':f"your data has id {id} - type {type} - name {name} min_price {min_price} - max_price {max_price}"}
 
-@zekapi.post('/products', tags=['product'])
+@zekapi.post('/products', tags=['product'], 
+             summary = "this enpoint is a product cerater",
+             description="you must send Product and id parameter into the body",
+             response_description = "this endpoint will be return 201 and model")
 def create_a_product(product:Product, response:Response):
     response.status_code = status.HTTP_201_CREATED
     return {'product':product}
 
-@zekapi.put('/products/{id}', tags=['product'])
+@zekapi.put('/products/{id}', tags=['product'], response_description = "this endpoint 204 no content")
 def update_a_product(id:int, product:Product, response:Response):
     if(id > 10) :
         response.status_code = status.HTTP_404_NOT_FOUND

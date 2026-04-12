@@ -1,3 +1,4 @@
+from enum import Enum
 from fastapi import FastAPI
 
 zekapi = FastAPI()
@@ -17,6 +18,17 @@ def get_all_product():
 @zekapi.get('/products/{id}')
 def get_product_by_id(id: int): # id must be integer pydantic
     return {'id':id,'name':'Flybikes'}
+
+class ProductType(str, Enum):
+    techno = "technology"
+    energy = "energy"
+    drink = "drink"
+    car = "car"
+
+@zekapi.get('/products/type/{type}')
+def get_product_by_type(type: ProductType):
+    return {'id':2, 'name':f"Product {type}", 'type':type}
+
 
 
 

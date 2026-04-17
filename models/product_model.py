@@ -1,9 +1,12 @@
 from fastapi import Body
 from pydantic import BaseModel
 
+from models import category_model
+
 
 class Product(BaseModel):
     id: int
+    category:category_model.Category
     name: str
     price: float
     stock: int

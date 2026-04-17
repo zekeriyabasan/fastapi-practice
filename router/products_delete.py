@@ -1,5 +1,5 @@
 from typing import List, Optional
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Path, Query
 from models.product_model import Product
 
 
@@ -10,7 +10,7 @@ router = APIRouter(
 
 
 @router.delete('/{id}')
-def delete(id: int, v:Optional[List[str]] = Query(None)): # optinal list str parameters
+def delete(id: int = Path(..., gt = 0, le=100), v:Optional[List[str]] = Query(None)): # optional list str parameters --- Path prameters 0 <id <= 100
     return{"id":id, "values": v}
 
 @router.delete('/')

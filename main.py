@@ -1,13 +1,12 @@
-from dataclasses import dataclass
-from enum import Enum
-from typing import Optional
-from fastapi import FastAPI, Response
-from starlette import status
+from fastapi import FastAPI
 
-from router import products_get
+from router import products_delete, products_get, products_post, products_put
 
 zekapi = FastAPI()
 zekapi.include_router(products_get.router)
+zekapi.include_router(products_post.router)
+zekapi.include_router(products_put.router)
+zekapi.include_router(products_delete.router)
 
 @zekapi.get('/main',
              tags=['main'],

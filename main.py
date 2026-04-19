@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
 from db import models
-from router import products_delete, products_get, products_post, products_put
+from router import products_delete, products_get, products_post, products_put, users_post
 
 from db.database import engine
 
@@ -10,6 +10,7 @@ zekapi.include_router(products_get.router)
 zekapi.include_router(products_post.router)
 zekapi.include_router(products_put.router)
 zekapi.include_router(products_delete.router)
+zekapi.include_router(users_post.router)
 
 @zekapi.get('/main',
              tags=['main'],

@@ -18,5 +18,5 @@ class DbArticle(Base):
     title = Column(String)
     content = Column(String)
     published = Column(Boolean)
-    user_id = Column(Integer, ForeignKey('user_id'))
+    user_id = Column(Integer, ForeignKey('users.id'))
     user = relationship("DbUser", back_populates='items')

@@ -1,6 +1,9 @@
 from fastapi import FastAPI
 
+from db import models
 from router import products_delete, products_get, products_post, products_put
+
+from db.database import engine
 
 zekapi = FastAPI()
 zekapi.include_router(products_get.router)
@@ -25,6 +28,11 @@ def index():
     
     """
     return {"text":"Hello ZEK !"}
+
+
+# create database and all tables
+
+models.Base.metadata.create_all(engine)
 
 
 

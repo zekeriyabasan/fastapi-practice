@@ -6,3 +6,8 @@ class UserBase(BaseModel):
     email:str
     password:str
 
+class UserDisplay(BaseModel):
+    username:str
+    email:str
+    class Config(): ## orm auto mapping response dto
+        orm_mode = True

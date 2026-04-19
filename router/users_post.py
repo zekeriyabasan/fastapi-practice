@@ -15,14 +15,8 @@ router = APIRouter(
 # Create User
 
 @router.post('/', response_model = UserDisplay, summary = "this enpoint is a user cerater",description="you must send User and id parameter into the body",response_description = "this endpoint will be return 201 and model")
-def create_a_product(request:UserBase, response:Response, db:Session = Depends(get_db)):
+def create_user(request:UserBase, response:Response, db:Session = Depends(get_db)):
     result = db_user.create_user(db, request)
     response.status_code = status.HTTP_201_CREATED
     return result
 
-
-# Read User
-
-# Update User
-
-# Delete User

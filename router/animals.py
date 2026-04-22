@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from fastapi import APIRouter, Depends, Header, Response
+from fastapi import APIRouter, Cookie, Depends, Header, Response
 from fastapi.responses import HTMLResponse, PlainTextResponse
 
 router = APIRouter(
@@ -14,12 +14,21 @@ animals = ["cat", "horse", "eagle", "rabbit"]
 def get_all():
     # return animals
     data = " ".join(animals)
-    return Response(content=data, media_type="text/plain")
+    response = Response(content=data, media_type="text/plain")
+    response.set_cookie(key = "mycookie", value="VAlue cookiese value my cookie")
+    return response
 
 @router.get('/withcustomheaders')
-def get_animals_with_headers(response:Response, custom_header: Optional[List[str]] = Header(None)):
-    response.headers['c-custom-header'] = " =>".join(custom_header)
-    return animals
+def get_animals_with_headers(response:Response, custom_header: Optional[List[str]] = Header(None), mycookie : Optional[str] = Cookie(None)):
+    
+    if custom_header:
+        response.headers['c-custom-header'] = " =>".join(custom_header)
+
+    return {
+        "data":animals,
+        "custom_header":custom_header,
+        "test_cookie":mycookie
+    }
 
 
 @router.get('/{id}' , responses={

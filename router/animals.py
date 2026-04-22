@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import List, Optional
 
 from fastapi import APIRouter, Depends, Header, Response
 from fastapi.responses import HTMLResponse, PlainTextResponse
@@ -17,7 +17,8 @@ def get_all():
     return Response(content=data, media_type="text/plain")
 
 @router.get('/withcustomheaders')
-def get_animals_with_headers(response:Response, custom_header: Optional[str] = Header(None)):
+def get_animals_with_headers(response:Response, custom_header: Optional[List[str]] = Header(None)):
+    response.headers['c-custom-header'] = " =>".join(custom_header)
     return animals
 
 

@@ -1,4 +1,6 @@
-from fastapi import APIRouter, Depends, Response
+from typing import Optional
+
+from fastapi import APIRouter, Depends, Header, Response
 from fastapi.responses import HTMLResponse, PlainTextResponse
 
 router = APIRouter(
@@ -13,6 +15,11 @@ def get_all():
     # return animals
     data = " ".join(animals)
     return Response(content=data, media_type="text/plain")
+
+@router.get('/withcustomheaders')
+def get_animals_with_headers(response:Response, custom_header: Optional[str] = Header(None)):
+    return animals
+
 
 @router.get('/{id}' , responses={
     200:{
@@ -56,3 +63,6 @@ def get_animal(id : int):
             </html>
         """
         return HTMLResponse(content=html_content, media_type="text/html")
+    
+
+

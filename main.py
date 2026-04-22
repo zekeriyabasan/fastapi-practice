@@ -1,6 +1,8 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
 
 from db import models
+from exceptions import StoryException
 from router import articles, products_delete, products_get, products_post, products_put, users_delete, users_get, users_post, users_put
 
 from db.database import engine
@@ -36,10 +38,20 @@ def index():
     """
     return {"text":"Hello ZEK !"}
 
+@zekapi.exception_handler(StoryException)
+def story_exception_handler(request: Request, exc:StoryException):
+    return JSONResponse(
+        status_code = 418,
+        content = {"detail":exc.message}
+
+    )
+
 
 # create database and all tables
 
 models.Base.metadata.create_all(engine)
+
+
 
 
 

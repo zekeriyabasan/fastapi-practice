@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from fastapi import APIRouter, Cookie, Depends, Header, Response
+from fastapi import APIRouter, Cookie, Depends, Form, Header, Response
 from fastapi.responses import HTMLResponse, PlainTextResponse
 
 router = APIRouter(
@@ -9,6 +9,12 @@ router = APIRouter(
 )
 
 animals = ["cat", "horse", "eagle", "rabbit"]
+
+@router.post('/')
+def add_an_animal(name:str = Form(...)):
+    animals.append(name)
+    return animals
+
 
 @router.get('/')
 def get_all():

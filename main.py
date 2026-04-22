@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse, PlainTextResponse
+from fastapi.middleware.cors import CORSMiddleware
 
 from db import models
 from exceptions import StoryException
@@ -54,6 +55,18 @@ def custom_exception(request: Request, exc:StoryException):
 # create database and all tables
 
 models.Base.metadata.create_all(engine)
+
+origins = [
+    'http://localhost:3000/'
+]
+
+zekapi.add_middleware(
+    CORSMiddleware,
+    allow_origins = origins,
+    allow_credentials = True,
+    allow_methods = ["*"],
+    allow_headers = ["*"]
+)
 
 
 

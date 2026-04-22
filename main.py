@@ -1,5 +1,5 @@
-from fastapi import FastAPI, Request
-from fastapi.responses import JSONResponse
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.responses import JSONResponse, PlainTextResponse
 
 from db import models
 from exceptions import StoryException
@@ -46,7 +46,9 @@ def story_exception_handler(request: Request, exc:StoryException):
 
     )
 
-
+@zekapi.exception_handler(HTTPException)
+def custom_exception(request: Request, exc:StoryException):
+    return PlainTextResponse(str(exc), status_code= 400)
 # create database and all tables
 
 models.Base.metadata.create_all(engine)

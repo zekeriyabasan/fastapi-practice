@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse, PlainTextResponse
 from fastapi.middleware.cors import CORSMiddleware
 
+from auth import authentication
 from db import models
 from exceptions import StoryException
 from router import animals, articles, products_delete, products_get, products_post, products_put, users_delete, users_get, users_post, users_put
@@ -9,6 +10,9 @@ from router import animals, articles, products_delete, products_get, products_po
 from db.database import engine
 
 zekapi = FastAPI()
+
+zekapi.include_router(authentication.router)
+
 zekapi.include_router(products_get.router)
 zekapi.include_router(products_post.router)
 zekapi.include_router(products_put.router)
@@ -22,6 +26,8 @@ zekapi.include_router(users_delete.router)
 zekapi.include_router(animals.router)
 
 zekapi.include_router(articles.router)
+
+
 
 @zekapi.get('/main',
              tags=['main'],

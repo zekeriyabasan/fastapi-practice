@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse, PlainTextResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 from auth import authentication
 from db import models
@@ -73,6 +74,8 @@ zekapi.add_middleware(
     allow_methods = ["*"],
     allow_headers = ["*"]
 )
+
+zekapi.mount('/files', StaticFiles(directory="files"), name="files") # for view the files with url
 
 
 

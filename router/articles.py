@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends, Response
 from starlette import status
 from sqlalchemy.orm.session import Session
-from auth.oauth2 import oauth2_scheme
+from auth.oauth2 import get_current_user
 from db import db_article
 from db.database import get_db
-from db.schemas import ArticleBase, ArticleDisplay
+from db.schemas import ArticleBase, ArticleDisplay, UserBase
 
 
 router = APIRouter(
@@ -16,7 +16,7 @@ router = APIRouter(
 # Create Article
 
 @router.post('/', response_model = ArticleDisplay)
-def create_user(request:ArticleBase, response:Response, db:Session = Depends(get_db), token:str = Depends(oauth2_scheme)):
+def create_user(request:ArticleBase, response:Response, db:Session = Depends(get_db), current_user:UserBase = Depends(get_current_user)):
     result = db_article.create_article(db, request)
     response.status_code = status.HTTP_201_CREATED
     return result
@@ -24,7 +24,7 @@ def create_user(request:ArticleBase, response:Response, db:Session = Depends(get
 # Read Article
 
 @router.get('/{id}', response_model = ArticleDisplay)           
-def get_article(id:int, response:Response, db:Session = Depends(get_db), token:str = Depends(oauth2_scheme)):
+def get_article(id:int, response:Response, db:Session = Depends(get_db), current_user:UserBase = Depends(get_current_user)):
     result = db_article.get_article(db, id)
     response.status_code = status.HTTP_200_OK
     return result

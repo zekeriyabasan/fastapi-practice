@@ -1,0 +1,7 @@
+Get All Animals Response : b'cat horse eagle rabbit'
+Get All Animals Response : b'cat horse eagle rabbit'
+Get All Animals Response : b'cat horse eagle rabbit'
+Get All Animals Response : b'cat horse eagle rabbit'
+Get All Animals Response : b'cat horse eagle rabbit'
+Get All Animals Response : b'cat horse eagle rabbit'
+Get All Animals Response : b'cat horse eagle rabbit'

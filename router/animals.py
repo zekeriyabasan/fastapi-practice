@@ -1,9 +1,8 @@
 from typing import List, Optional
-
 from fastapi import APIRouter, Cookie, Depends, Form, Header, Response
 from fastapi.responses import HTMLResponse, PlainTextResponse
-
 from auth.oauth2 import get_current_user
+from custom_log import log
 from db.schemas import UserBase
 
 router = APIRouter(
@@ -25,6 +24,7 @@ def get_all(current_user:str = Depends(get_current_user)):
     data = " ".join(animals)
     response = Response(content=data, media_type="text/plain")
     response.set_cookie(key = "mycookie", value="VAlue cookiese value my cookie")
+    log(tag="Get All Animals Response", message=response.body)
     return response
 
 @router.get('/withcustomheaders')

@@ -16,7 +16,7 @@ router = APIRouter(
 # Create Article
 
 @router.post('/', response_model = ArticleDisplay)
-def create_user(request:ArticleBase, response:Response, db:Session = Depends(get_db), current_user:UserBase = Depends(get_current_user)):
+def create_article(request:ArticleBase, response:Response, db:Session = Depends(get_db), current_user:UserBase = Depends(get_current_user)):
     result = db_article.create_article(db, request)
     response.status_code = status.HTTP_201_CREATED
     return result

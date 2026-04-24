@@ -1,10 +1,15 @@
+from fastapi import HTTPException, status
 from sqlalchemy.orm.session import Session
 from db.models import DbArticle
 from db.schemas import ArticleBase
+from exceptions import StoryException
 
 # Create Article
 
 def create_article(db:Session, request:ArticleBase):
+    # use custom exception
+    if(request.published is False):
+        raise StoryException("Article must be published")
     new_article = DbArticle(
         title = request.title,
         content = request.content,
@@ -20,4 +25,6 @@ def create_article(db:Session, request:ArticleBase):
 def get_article(db:Session, id: int):
     article = db.query(DbArticle).filter(DbArticle.id == id).first()
     # handle any exception
+    if not article:
+        raise HTTPException(status_code = status.HTTP_404_NOT_FOUND, detail= f"Article with id {id} not found !")
     return article

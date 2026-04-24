@@ -10,27 +10,27 @@ from router import animals, articles, file, products_delete, products_get, produ
 
 from db.database import engine
 
-zekapi = FastAPI()
+app = FastAPI()
 
-zekapi.include_router(authentication.router)
+app.include_router(authentication.router)
 
-zekapi.include_router(products_get.router)
-zekapi.include_router(products_post.router)
-zekapi.include_router(products_put.router)
-zekapi.include_router(products_delete.router)
+app.include_router(products_get.router)
+app.include_router(products_post.router)
+app.include_router(products_put.router)
+app.include_router(products_delete.router)
 
-zekapi.include_router(users_post.router)
-zekapi.include_router(users_get.router)
-zekapi.include_router(users_put.router)
-zekapi.include_router(users_delete.router)
+app.include_router(users_post.router)
+app.include_router(users_get.router)
+app.include_router(users_put.router)
+app.include_router(users_delete.router)
 
-zekapi.include_router(animals.router)
+app.include_router(animals.router)
 
-zekapi.include_router(articles.router)
-zekapi.include_router(file.router)
+app.include_router(articles.router)
+app.include_router(file.router)
 
 
-@zekapi.get('/main',
+@app.get('/main',
              tags=['main'],
              summary = "main is main lol",
             #  description="description of main  endpoint",
@@ -48,7 +48,7 @@ def index():
     """
     return {"text":"Hello ZEK !"}
 
-@zekapi.exception_handler(StoryException)
+@app.exception_handler(StoryException)
 def story_exception_handler(request: Request, exc:StoryException):
     return JSONResponse(
         status_code = 418,
@@ -56,7 +56,7 @@ def story_exception_handler(request: Request, exc:StoryException):
 
     )
 
-@zekapi.exception_handler(HTTPException)
+@app.exception_handler(HTTPException)
 def custom_exception(request: Request, exc:StoryException):
     return PlainTextResponse(str(exc), status_code= 400)
 # create database and all tables
@@ -67,7 +67,7 @@ origins = [
     'http://localhost:3000/'
 ]
 
-zekapi.add_middleware(
+app.add_middleware(
     CORSMiddleware,
     allow_origins = origins,
     allow_credentials = True,
@@ -75,7 +75,7 @@ zekapi.add_middleware(
     allow_headers = ["*"]
 )
 
-zekapi.mount('/files', StaticFiles(directory="files"), name="files") # for view the files with url
+app.mount('/files', StaticFiles(directory="files"), name="files") # for view the files with url
 
 
 

@@ -1,3 +1,4 @@
+import time
 from typing import Optional
 from fastapi import APIRouter, Depends, Query
 
@@ -12,9 +13,14 @@ router = APIRouter(
 )
 
 
+async def wait_five_seconds():
+    time.sleep(5)
+    return "ok"
+
 
 @router.get('/products/all') # IMPORTANT path conflict all like id thinking so should be before then '/products/{id}' get_product_by_id method
-def get_all_product(zek_name:dict = Depends(example_for_depends.get_my_name)):
+async def get_all_product(zek_name:dict = Depends(example_for_depends.get_my_name)):
+    await wait_five_seconds() # async method call thread management
     return [{'id':1,'name':'Flybikes'},{'id':2,'name':'Federalbikes'},zek_name]   
 
 @router.get('/products/filter')

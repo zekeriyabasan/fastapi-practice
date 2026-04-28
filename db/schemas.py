@@ -42,6 +42,9 @@ class ArticleDisplay(BaseModel):
     class Config(): 
         orm_mode = True
 
-
+class OopsieBase(BaseModel):
+    title:str
+    description:str
+    assigned_user:str
 
 

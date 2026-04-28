@@ -79,6 +79,7 @@ app.add_middleware(
 )
 
 app.mount('/files', StaticFiles(directory="files"), name="files") # for view the files with url
+app.mount('/templates/static/', StaticFiles(directory="templates/static"), name="static")  # for css file read - oopsie.hmlt used
 
 
 

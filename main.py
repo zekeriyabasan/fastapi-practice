@@ -1,3 +1,5 @@
+import time
+
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse, PlainTextResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -32,6 +34,14 @@ app.include_router(file.router)
 
 app.include_router(templates.router)
 
+@app.middleware("http")
+async def add_middleware(request:Request, call_next):
+    start_time = time.time()
+    response = await call_next(request)
+    duration = time.time() - start_time
+    response.headers["duration"] = str(duration)
+    response.headers["middleware-hey-its-me"] = "hey hey middleware" 
+    return response 
 
 @app.get('/main',
              tags=['main'],

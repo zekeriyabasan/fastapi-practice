@@ -8,7 +8,7 @@ from client import html
 from auth import authentication
 from db import models
 from exceptions import StoryException
-from router import animals, articles, file, products_delete, products_get, products_post, products_put, users_delete, users_get, users_post, users_put
+from router import animals, articles, dependencies, file, products_delete, products_get, products_post, products_put, users_delete, users_get, users_post, users_put
 
 from db.database import engine
 from router import templates
@@ -33,7 +33,7 @@ app.include_router(articles.router)
 app.include_router(file.router)
 
 app.include_router(templates.router)
-
+app.include_router(dependencies.router)
 @app.middleware("http")
 async def add_middleware(request:Request, call_next):
     start_time = time.time()

@@ -1,10 +1,10 @@
-import time
 
-from fastapi import FastAPI, HTTPException, Request
-from fastapi.responses import JSONResponse, PlainTextResponse
+import time
+from fastapi import FastAPI, HTTPException, Request, WebSocket
+from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-
+from client import html
 from auth import authentication
 from db import models
 from exceptions import StoryException
@@ -42,6 +42,23 @@ async def add_middleware(request:Request, call_next):
     response.headers["duration"] = str(duration)
     response.headers["middleware-hey-its-me"] = "hey hey middleware" 
     return response 
+
+@app.get('/')
+async def get():
+    return HTMLResponse(html)
+
+clients = []
+
+@app.websocket('/chat')
+async def websocket_endpoint(websocket: WebSocket):
+    await websocket.accept()
+    clients.append(websocket)
+    while True:
+        data = await websocket.receive_text()
+
+        for client in clients:
+            await client.send_text(data)
+
 
 @app.get('/main',
              tags=['main'],

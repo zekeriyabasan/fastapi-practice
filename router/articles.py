@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, Response
 from starlette import status
 from sqlalchemy.orm.session import Session
 from auth.oauth2 import get_current_user
+from custom_log import log
 from db import db_article
 from db.database import get_db
 from db.schemas import ArticleBase, ArticleDisplay, UserBase
@@ -9,7 +10,8 @@ from db.schemas import ArticleBase, ArticleDisplay, UserBase
 
 router = APIRouter(
     prefix='/articles',
-    tags=['articles']
+    tags=['articles'],
+    dependencies=[Depends(log)]
 )
 
 

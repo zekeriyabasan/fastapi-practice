@@ -6,3 +6,12 @@ Get All Animals Response : b'cat horse eagle rabbit'
 Get All Animals Response : b'cat horse eagle rabbit'
 Get All Animals Response : b'cat horse eagle rabbit'
 MyAPI : Template read for oopsie with id 4
+ : 
+ : 
+ : 
+asdas : asdasd
+asdas : asdasd
+ : 
+ : request_ur: http://127.0.0.1:8000/articles/2 : 
+ : request_ur: http://127.0.0.1:8000/articles/2 : Messagaasdasd
+ : request_url: http://127.0.0.1:8000/articles/2?message=Messagaasdasd
